@@ -1,0 +1,22 @@
+#include <bits/stdc++.h> 
+int jump(int n, vector<int> &heights, vector<int> &dp)
+{
+    int prev2 = 0;
+    int prev = 0;
+    for(int i=1;i<n;i++)
+    {
+        int l = prev + abs(heights[i] - heights[i-1]);
+        int r = INT_MAX;
+        if(i>1)
+            r = prev2 + abs(heights[i] - heights[i-2]);
+        int cur = min(l, r);
+        prev2 = prev;
+        prev = cur;
+    }
+    return prev;
+}
+int frogJump(int n, vector<int> &heights)
+{
+    vector<int> dp(n,-1);
+    return jump(n, heights, dp);
+}

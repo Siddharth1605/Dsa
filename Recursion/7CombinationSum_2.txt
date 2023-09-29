@@ -1,0 +1,29 @@
+class Solution {
+public:
+vector<vector<int>> fun(vector<int> &candidates, int t, int ind,  int n, vector<int> ds)
+    {
+        vector<vector<int>> ans;
+        if(t == 0)
+        {
+            for(auto it: ds)    cout << it << " ";
+            cout << endl;
+            ans.push_back(ds);
+            return ans;
+        }
+       for (int i = ind; i < candidates.size(); i++) {
+            if (i > ind && candidates[i] == candidates[i - 1]) continue;
+            if (candidates[i] > t) break;
+            ds.push_back(candidates[i]);
+           vector<vector<int>> combinations = fun(candidates, t - candidates[i], i + 1, n, ds);
+        ans.insert(ans.end(), combinations.begin(), combinations.end());
+            ds.pop_back();
+        }
+        return ans;
+    }
+    vector<vector<int>> combinationSum2(vector<int>& candidates, int t) {
+        vector<int> ds;
+        sort(candidates.begin(), candidates.end());
+        vector<vector<int>> ans = fun(candidates, t, 0, candidates.size(), ds);
+        return ans;
+    }
+};

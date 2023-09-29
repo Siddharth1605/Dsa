@@ -1,0 +1,49 @@
+class Solution {
+public:
+    bool solver(vector<vector<char>> &board)
+    {
+        for(int i=0;i<9;i++)
+        {
+            for(int j=0;j<9;j++)
+            {
+                if(board[i][j] == '.')
+                {
+                    for(char c='1';c<='9';c++)
+                    {
+                        if(valid(c, board, i, j))
+                        {
+                            board[i][j] = c;
+
+                            if(solver(board))   return true;
+
+                            else board[i][j] = '.';
+                        }
+                    }
+                        return false;
+                }
+                
+            }
+        }
+        return true;
+    }
+    bool valid(char d, vector<vector<char>> &board, int r, int c)
+    {
+        for(int i=0;i<9;i++)
+        {
+            if(board[i][c] == d)    return false;
+            if(board[r][i] == d)    return false;
+            if(board[3 * (r/3) + i/3][3 * (c/3) + i%3] == d)    return false;
+        }
+        return true;
+    }
+    void solveSudoku(vector<vector<char>>& board) {
+        if(solver(board))
+        {
+             for(int i= 0; i< 9; i++){
+            for(int j= 0; j< 9; j++)
+            cout<<board[i][j]<<" ";
+            cout<<"\n";
+        }
+        }
+    }
+};

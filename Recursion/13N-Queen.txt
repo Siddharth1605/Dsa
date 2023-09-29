@@ -1,0 +1,45 @@
+class Solution {
+public:
+    void rec(int n, vector<vector<string>> &ans, vector<string> &board, vector<int> left,vector<int> updiagonal, vector<int> lowdiagonal, int c)
+    {
+        if(c == n)
+        {
+            ans.push_back(board);
+            return;
+        }
+        for(int r=0;r<n;r++)
+        {
+            if(updiagonal[n - 1 + r - c] == 0 && lowdiagonal[r + c] == 0 && left[r] == 0) 
+            {
+                board[r][c] = 'Q';
+
+                updiagonal[(n-1) + (r-c)] = 1;
+                left[r] = 1;
+                lowdiagonal[r+c] = 1;
+
+                rec(n, ans, board, left, updiagonal, lowdiagonal, c+1);
+
+                updiagonal[(n-1) + (r-c)] = 0;
+                left[r] = 0;
+                lowdiagonal[r+c] = 0;
+
+                board[r][c] = '.';
+            }
+        }
+    }
+    vector<vector<string>> solveNQueens(int n) {
+        string s(n, '.');
+        vector<string> board(n);
+        for(int i=0;i<n;i++)    board[i] = s;
+
+        vector<vector<string>> ans;
+
+        vector<int> left(n,0);
+        vector<int> updiagonal(2*n - 1, 0);
+        vector<int> lowdiagonal(2*n - 1, 0);
+
+        rec(n, ans, board, left, updiagonal, lowdiagonal, 0);
+
+        return ans;
+    }
+};

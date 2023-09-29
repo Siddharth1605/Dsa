@@ -1,0 +1,40 @@
+#include<bits/stdc++.h>
+int fun(int i, int w, vector<int> &profit, vector<int> &weight, vector<vector<int>> &dp)
+{
+    if(i == 0)
+    {
+        return (w/weight[i])*profit[i];
+    }
+
+    int take = INT_MIN;
+    int ntake = fun(i-1, w, profit, weight, dp);
+    if(w >= weight[i])
+        take = profit[i] + fun(i, w-weight[i], profit, weight, dp);
+
+    return max(take, ntake);
+}
+int unboundedKnapsack(int n, int w, vector<int> &profit, vector<int> &weight){
+    // Write Your Code Here.
+    vector<vector<int>> dp(n, vector<int>(w+1, 0));
+
+    for(int i=0;i<=w;i++)
+    {
+        dp[0][i] = (i/weight[0])*profit[0];
+    }
+
+    for(int i=1;i<n;i++)
+    {
+        for(int j=0;j<=w;j++)
+        {
+            int take = 0;
+            int ntake = dp[i-1][j];
+            if(j>=weight[i])
+            {
+                take = profit[i] + dp[i][j-weight[i]];
+            }
+
+            dp[i][j] = max(take, ntake);
+        }
+    }
+    return dp[n-1][w];
+}

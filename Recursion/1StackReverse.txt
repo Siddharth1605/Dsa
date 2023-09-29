@@ -1,0 +1,8 @@
+
+void reverseStack(stack<int> &stack) {
+    // Write your code here
+    if(stack.size() == 0)   return;
+    cout << stack.top();
+    stack.pop();
+    reverseStack(stack);
+}

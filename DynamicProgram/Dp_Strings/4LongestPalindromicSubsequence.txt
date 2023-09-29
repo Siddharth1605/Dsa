@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int fun(int i, int j, string s, string r,vector<vector<int>> &dp)
+    {
+        if(i<0 || j<0)    return 0;
+        if(dp[i][j] != -1)  return dp[i][j];
+
+        if(s[i] == r[j])    return dp[i][j] =  1 + fun(i-1,j-1,s,r, dp);
+        else    return dp[i][j] = max(fun(i-1, j, s, r, dp), fun(i, j-1, s, r, dp));
+    }
+    int longestPalindromeSubseq(string s) {
+        string a = s;
+        reverse(a.begin(), a.end());
+        int n = a.length();
+        vector<vector<int>> dp(n+1, vector<int>(n+1, 0));
+
+        for(int i=1;i<=n;i++)
+        {
+            for(int j=1;j<=n;j++)
+            {
+                if(a[i-1] == s[j-1])
+                    dp[i][j] = 1 + dp[i-1][j-1];
+                else
+                    dp[i][j] = max(dp[i-1][j], dp[i][j-1]);
+            }
+        }
+        return dp[n][n];
+    }
+};

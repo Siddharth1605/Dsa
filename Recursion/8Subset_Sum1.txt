@@ -1,0 +1,24 @@
+vector<int> sum(vector<int> &num, int i, int s)
+{
+	vector<int> ans;
+	if(i == num.size())
+	{
+		ans.push_back(s);
+		return ans;
+	}
+
+	vector<int> l = sum(num, i+1, s+num[i]);
+
+	vector<int> r = sum(num, i+1, s);
+
+	ans.insert(ans.end(), l.begin(), l.end());
+	ans.insert(ans.end(), r.begin(), r.end());
+
+	return ans;
+}
+vector<int> subsetSum(vector<int> &num){
+	// Write your code here.	
+	vector<int> ans = sum(num, 0, 0);
+	sort(ans.begin(), ans.end());
+	return ans;
+}

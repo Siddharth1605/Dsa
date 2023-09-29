@@ -1,0 +1,32 @@
+class Solution {
+public:
+    vector<vector<int>> fun(vector<int> &candidates, int t, int i, vector<int> ds)
+    {
+        vector<vector<int>> ans;
+        if(t == 0)
+        {
+            ans.push_back(ds);
+            return ans;
+        }
+        if(i == candidates.size())
+        {
+            if(t == 0)  ans.push_back(ds);
+            return ans;
+        }
+
+        if(t>=candidates[i]){
+        ds.push_back(candidates[i]);
+        ans = fun(candidates, t - candidates[i], i, ds);
+        ds.pop_back();
+        }
+        vector<vector<int>> res = fun(candidates, t, i+1, ds);
+
+        ans.insert(ans.end(), res.begin(), res.end());
+        return ans;
+    }
+    vector<vector<int>> combinationSum(vector<int>& candidates, int t) {
+        vector<int> ds;
+        vector<vector<int>> result = fun(candidates, t, 0, ds);
+        return result;
+    }
+};

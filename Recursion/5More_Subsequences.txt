@@ -1,0 +1,31 @@
+unordered_set<string> fun(int n, string a, int i, string b)
+{
+    unordered_set<string> ans;
+    if(i == n)
+    {
+        if(b.length() != 0)
+        ans.insert(b);
+        return ans;
+    }
+
+    unordered_set<string> res = fun(n, a, i+1, b);
+
+    b+=a[i];
+    ans = fun(n, a, i+1, b);
+
+
+    ans.insert(res.begin(), res.end());
+    return ans;
+}
+string moreSubsequence(int n, int m, string a, string b)
+{
+    // Write your code here
+
+    unordered_set<string> a1 = fun(n, a, 0, "");
+    unordered_set<string> b2 = fun(m, b, 0, "");
+
+
+    if(a1.size() == b2.size())  return a;
+    else if(a1.size() > b2.size())  return a;
+    else    return b;
+}

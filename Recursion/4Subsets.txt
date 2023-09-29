@@ -1,0 +1,25 @@
+class Solution {
+public:
+    vector<vector<int>> fun(vector<int> &nums, int i, vector<int> ds)
+    {
+        vector<vector<int>> ans;
+        if(i == nums.size())
+        {
+            ans.push_back(ds);
+            return ans;
+        }
+
+        ds.push_back(nums[i]);
+        ans = fun(nums, i+1, ds);
+
+        ds.pop_back();
+        vector<vector<int>> res = fun(nums, i+1, ds);
+        ans.insert(ans.end(), res.begin(), res.end());
+        return ans;
+    }
+    vector<vector<int>> subsets(vector<int>& nums) {
+        vector<int> ds;
+        vector<vector<int>> ansd = fun(nums, 0,ds);
+        return ansd;
+    }
+};

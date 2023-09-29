@@ -1,0 +1,34 @@
+class Solution {
+public:
+    void operation(vector<string> &ans, string x, int t, string p, long long s, long long lastnum, int ind)
+    {
+        if(ind == x.length())
+        {
+            if(t == s)  ans.push_back(p);
+            return;
+        }
+        for(int i=ind;i<x.length();i++)
+        {
+            string sub = x.substr(ind, i - ind + 1);
+            long long num = stoll(sub);
+
+           
+
+            if(ind == 0)
+                operation(ans, x, t, p + sub, num, num, i+1);
+            else
+            {
+                operation(ans, x, t, p + "*" + sub, s - lastnum + lastnum * num, lastnum * num, i+1);
+                operation(ans, x, t, p + "+" + sub, s + num, num, i+1);
+                operation(ans, x, t, p + "-" + sub, s - num, -num, i+1);
+            } 
+
+            if(num == 0) break;
+        }
+    }
+    vector<string> addOperators(string x, int t) {
+        vector<string> ans;
+        operation(ans, x, t, "",0, 0, 0);
+        return ans;
+    }
+};

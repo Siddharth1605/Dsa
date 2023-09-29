@@ -1,0 +1,23 @@
+#include <bits/stdc++.h> 
+int jump(int n, vector<int> &height, vector<int> &dp, int k)
+{
+    if(n == 0)  return 0;
+    if(dp[n] != -1) return dp[n];
+
+    int l = jump(n-1, height, dp, k) + abs(height[n] - height[n-1]);
+    int minx = INT_MAX;
+    for(int i=2;i<=k;i++)
+    {
+        int r = INT_MAX;
+    if(n-i >= 0)
+        r = jump(n-i, height, dp, k) + abs(height[n] - height[n-i]);
+
+        if(minx > r)    minx = r; 
+    }
+    return dp[n] = min(l, minx);
+}
+int minimizeCost(int n, int k, vector<int> &height){
+    // Write your code here.
+    vector<int> dp(n,-1);
+    return jump(n-1, height, dp, k);
+}

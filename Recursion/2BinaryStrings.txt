@@ -1,0 +1,25 @@
+vector<string> fun(string a, int n, int i)
+{
+    vector<string> res;
+
+    if(i == n)  {res.push_back(a);  return res;}
+
+    vector<string> zero = fun(a+'0' , n, i+1);
+
+    vector<string> one;
+    if(i+1 == n)
+        one = fun(a+'1', n, i+1);
+    else    
+        one = fun(a+"10",n,i+2);
+
+    res.insert(res.end(), zero.begin(), zero.end());
+    res.insert(res.end(), one.begin(), one.end());
+    
+    return res;
+}
+
+vector<string> generateString(int n) {
+    // Write your code here.
+    vector<string> ans = fun("",n,0);
+    return ans;
+}

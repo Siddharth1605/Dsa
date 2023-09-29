@@ -1,0 +1,45 @@
+#include <bits/stdc++.h> 
+int fun(vector<int> wt, vector<int> val, int i, int w, vector<vector<int>> &dp)
+{
+	if(i == 0)
+	{
+		if(wt[i] <= w)	return val[i];
+		return 0;
+	}
+
+	if(dp[i][w] != -1)	return dp[i][w];
+	int nottake = fun(wt, val, i-1, w, dp);
+	int take = INT_MIN;
+	if(wt[i] <= w)
+		take = val[i] + fun(wt, val,i-1, w-wt[i], dp);
+
+	return dp[i][w] = max(take, nottake);
+}
+int knapsack(vector<int> wt, vector<int> val, int n, int w) 
+{
+	// Write your code here
+	vector<vector<int>> dp(n, vector<int>(w+1, 0));
+
+	for(int i=wt[0];i<=w;i++)
+	{
+		dp[0][i] = val[0];
+	}
+
+	for(int i=1;i<n;i++)
+	{
+		for(int cap = 1;cap<=w;cap++)
+		{
+			int nt = dp[i-1][cap];
+			int tk = INT_MIN;
+
+			if(wt[i] <= cap)
+			{
+				tk = val[i] + dp[i-1][cap-wt[i]];
+			}
+
+			dp[i][cap] = max(nt, tk);
+		}
+	}
+
+	return dp[n-1][w];
+}

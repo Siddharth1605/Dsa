@@ -1,0 +1,53 @@
+
+class Solution {
+public:
+    int fun(int i, int t, vector<int> &nums, vector<vector<int>> &dp)
+    {
+        if(i == 0)
+        {
+            if(nums[0] == t && t == 0)    return 2;
+            if(nums[0] == t || t == 0)    return 1;
+            return 0;
+        }
+
+        if(dp[i][t] != -1)  return dp[i][t];
+
+        int take = 0;
+        int ntake = fun(i-1, t, nums, dp);
+        if(t >= nums[i])
+            take = fun(i-1, t-nums[i], nums, dp);
+
+        return dp[i][t] = take + ntake;
+    }
+    int findTargetSumWays(vector<int>& nums, int target) {
+        int mod =(int)1e9+7;
+
+        int t = 0;
+        int n = nums.size();
+        for(int i=0;i<n;i++)    t += nums[i];
+
+        if(t-target < 0)    return 0;
+        if((t-target) % 2 == 1) return 0;
+
+        int x = (t-target)/2 ;
+        
+        vector<vector<int>> dp(n, vector<int>(x+1, 0));
+        if(nums[0] == 0)    dp[0][0] = 2;
+        else    dp[0][0] = 1;
+
+        if(nums[0] != 0 && nums[0] <= x)    dp[0][nums[0]] = 1;
+
+        for(int i=1;i<n;i++)
+        {
+            for(int j=0;j<=x;j++)
+            {
+                int take = 0;
+                int ntake = dp[i-1][j];
+
+                if(j>=nums[i])   take = dp[i-1][j-nums[i]];
+                dp[i][j] = (take + ntake) % mod;
+            }
+        }
+        return dp[n-1][x];
+    }
+};

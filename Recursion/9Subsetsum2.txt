@@ -1,0 +1,32 @@
+class Solution {
+public:
+    vector<vector<int>> sub(vector<int> &nums, int n, int ind, vector<int> ds)
+    {
+        vector<vector<int>> ans;
+        if(ind == n)
+        {
+            ans.push_back(ds);
+            return ans;
+        }
+        int i = ind;
+        for(i=ind;i<n;i++)
+        {
+            if(i>ind && nums[i]==nums[i-1]) continue;
+            ds.push_back(nums[i]);
+            vector<vector<int>> temp = sub(nums, n, i+1, ds);
+            ans.insert(ans.end(), temp.begin(), temp.end());
+            ds.pop_back();
+        }
+        if(i == n)
+        {
+            ans.push_back(ds);
+        }
+        return ans;
+    }
+    vector<vector<int>> subsetsWithDup(vector<int>& nums) {
+        vector<int> ds;
+        sort(nums.begin(), nums.end());
+        vector<vector<int>> result = sub(nums, nums.size(), 0, ds);
+        return result;
+    }
+};

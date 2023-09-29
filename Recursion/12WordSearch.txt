@@ -1,0 +1,39 @@
+class Solution {
+public:
+    bool maze(vector<vector<char>> &board, string s,  int n, int m, int r, int c, int ind)
+    {
+        if(ind == s.length())   return true;
+        if(r<0 || c<0 || r>=n || c>=m || board[r][c] == '.' || board[r][c] != s[ind]) return false;
+
+        char ch = board[r][c];
+        board[r][c] = '.';
+        
+        bool top = maze(board, s, n, m, r-1, c, ind+1);
+
+        bool bottom = maze(board, s, n, m, r+1, c, ind+1);
+
+        bool left = maze(board, s, n, m, r, c-1, ind+1);
+
+        bool right = maze(board, s, n, m, r, c+1, ind+1);
+
+        board[r][c] = ch;
+        return top || bottom || left || right;
+        
+    }
+    bool exist(vector<vector<char>>& board, string word) {
+        int n = board.size();
+        int m = board[0].size();
+        vector<vector<int>> visitor(n, vector<int>(m, 0));
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<m;j++)
+            {
+                if(board[i][j] == word[0])
+                {
+                    if(maze(board, word, n, m, i, j, 0))   return true;
+                }
+            }
+        }
+        return false;
+    }
+};

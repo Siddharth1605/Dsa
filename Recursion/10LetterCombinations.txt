@@ -1,0 +1,31 @@
+class Solution {
+public:
+    void backtrack(vector<string> &ans, string p, string digits, map<char, string> m, int ind)
+    {
+        if(p.length() == digits.length())
+        {
+            ans.push_back(p);
+            return;
+        }
+        for(auto it: m[digits[ind]])
+        {
+            backtrack(ans, p+it, digits, m, ind+1);
+        }
+    }
+    vector<string> letterCombinations(string digits) {
+        map<char,string> m;
+        m['2']="abc";
+        m['3']="def";
+        m['4']="ghi";
+        m['5']="jkl";
+        m['6']="mno";
+        m['7']="pqrs";
+        m['8']="tuv";
+        m['9']="wxyz";
+
+        vector<string> ans;
+        if(digits.length() != 0)
+        backtrack(ans, "", digits, m, 0);
+        return ans;
+    }
+};
