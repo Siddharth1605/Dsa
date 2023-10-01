@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/Siddharth/Documents/Dsa_Codes/Trees",
-      "program": "c:/Users/Siddharth/Documents/Dsa_Codes/Trees/build/Debug/outDebug",
+      "cwd": "c:/Users/Siddharth/Documents/Learning/Dsa_Codes/Trees",
+      "program": "c:/Users/Siddharth/Documents/Learning/Dsa_Codes/Trees/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
