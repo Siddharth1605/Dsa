@@ -11,21 +11,27 @@
         int j = 0;
         int n = s.length();
         int m = goal.length();
-        while (i < n) {
-            if (s.charAt(i) == goal.charAt(j)) {
+        while (i < n)
+        {
+            if (s.charAt(i) == goal.charAt(j)) 
+            {
                 i++;
                 j++;
                 if (j == m)
                     return true;
-            } else {
-                if (j != 0) {
-                    // Reset j only if it's not the first character mismatch
+            }
+            else 
+            {
+                if (j != 0) 
+                {
                     i = i - j + 1;
                     j = 0;
-                } else {
-                    i++;
                 }
+                else
+                    i++;
             }
+
+            
         }
         return false;
     }
