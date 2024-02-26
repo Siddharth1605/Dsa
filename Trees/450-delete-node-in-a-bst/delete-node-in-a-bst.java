@@ -40,7 +40,7 @@ class Bst
             if(root.left == null)
                 return root.right;
             TreeNode temp = root.right;
-            TreeNode prev = root.right;
+            TreeNode prev = temp;
             while(temp.left != null)
             {
                 prev = temp;
