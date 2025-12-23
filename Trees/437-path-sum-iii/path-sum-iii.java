@@ -26,12 +26,32 @@ class Solution {
         int rightPath = rootPathSum(root.right, t, sum + root.val);
         return count + leftPath + rightPath;
     }
-    public int pathSum(TreeNode root, int t) {
+    public static int brute(TreeNode root, int t) {
         if(root == null)
             return 0;
         int pathSum = rootPathSum(root, t, 0);
-        int left = pathSum(root.left, t);
-        int right = pathSum(root.right, t);
+        int left = brute(root.left, t);
+        int right = brute(root.right, t);
         return pathSum + left + right;
+    }
+
+    public static int optimised(TreeNode root, int t, long sum, Map<Long, Integer> map)    {
+        if(root == null)
+            return 0;
+        sum += root.val;
+        int count = map.getOrDefault(sum - t, 0);
+        map.put(sum, map.getOrDefault(sum, 0) + 1);
+        count += optimised(root.left, t, sum, map);
+        count += optimised(root.right, t, sum, map);
+        map.put(sum, map.get(sum) - 1);
+        if(map.get(sum) == 0)
+            map.remove(sum);
+        return count;
+    }
+    public int pathSum(TreeNode root, int t) {
+        Map<Long, Integer> map = new HashMap<>();
+        long zero = 0;
+        map.put(zero, 1);
+        return optimised(root, t, 0, map);
     }
 }
