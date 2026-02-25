@@ -1,0 +1,60 @@
+// User function Template for Java
+class Pair {
+    int e;
+    int w;
+    public Pair(int e, int w) {
+        this.e = e;
+        this.w = w;
+    }
+}
+class Solution {
+    
+    public void topoSort(int node, int[] vis, Stack<Integer> stack, List<List<Pair>> adj) 
+    {
+        vis[node] = 1;
+        for(Pair it : adj.get(node)) {
+            if(vis[it.e] == 0)
+                topoSort(it.e, vis, stack, adj);
+        }
+        stack.add(node);
+    }
+    public int[] shortestPath(int v, int e, int[][] edges) {
+        // Code here
+        List<List<Pair>> adj = new ArrayList<>();
+        for(int i=0;i<v;i++)
+            adj.add(new ArrayList<>());
+        for(int i=0;i<edges.length;i++) {
+            adj.get(edges[i][0])
+                .add(new Pair(edges[i][1], edges[i][2]));
+        }
+        
+        int[] vis = new int[v];
+        Stack<Integer> stack = new Stack<>();
+        
+        for(int i=0;i<v;i++)
+        {
+            if(vis[i] == 0)
+                topoSort(i, vis, stack, adj);
+        }
+        
+        int[] dis = new int[v];
+        Arrays.fill(dis, Integer.MAX_VALUE);
+        
+        dis[0] = 0;
+        while(!stack.isEmpty()) {
+            int node = stack.pop();
+            if(dis[node] == Integer.MAX_VALUE)
+                continue;
+            for(Pair it : adj.get(node)) {
+                int adjNodeDis = dis[node] + it.w;
+                dis[it.e] = Math.min(dis[it.e], adjNodeDis);
+            }
+        }
+        
+        for(int i=0;i<v;i++)
+            if(dis[i] == Integer.MAX_VALUE)
+                dis[i] = -1;
+        
+        return dis;
+    }
+}
