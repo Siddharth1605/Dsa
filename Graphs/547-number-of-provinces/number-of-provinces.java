@@ -83,7 +83,7 @@ class Solution {
         }
         int count = 0;
         for(int i=0;i<n;i++)
-            if(ds.findParent(i) == i)
+            if(ds.parent.get(i) == i)
                 count++;
         return count;
     }
