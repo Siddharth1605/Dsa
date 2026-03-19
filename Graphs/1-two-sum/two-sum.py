@@ -3,9 +3,9 @@ class Solution:
         l = 0
         n = len(nums) 
         hash = {}
-        for j in range(n):
-            if nums[j] not in hash:
-                hash[nums[j]] = j
+        for i in range(n):
+            if nums[i] not in hash:
+                hash[nums[i]] = i
         ans = []
         print(hash)
         for j in range(n):
