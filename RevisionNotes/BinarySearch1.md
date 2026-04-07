@@ -1,3 +1,5 @@
+<img width="1051" height="643" alt="binarysearch" src="https://github.com/user-attachments/assets/758d0ed0-d0ad-4115-91f5-f75a44eedd93" />
+
 
 The whole idea of binary search is to reduce the search space by half in each iteration.
 
